@@ -16,8 +16,12 @@ function table_to_string (t)
         end
     end
     local result = {}
-    for k, v in pairs(t) do
-        result[#result + 1] = k .. ": " .. v
+    if #t == 0 then
+        result = {"Empty"}
+    else
+        for k, v in pairs(t) do
+            result[#result + 1] = k .. ": " .. v
+        end
     end
     return table.concat(result, "\n")
 end
@@ -87,11 +91,11 @@ function concatinate (a1, a2)
     return r
 end
 
-a1 = {1, 2, 3, 4}
+a1 = {1}
 setmetatable(a1, metatable)
-a2 = {5, 6}
+a2 = {2, 3}
 setmetatable(a2, metatable)
-print("Concatinate {1, 2, 3, 4} & {5, 6} is:")
+print("Concatinate {1} & {2, 3} is:")
 print(tostring(concatinate(a1, a2)))
 
 print()
@@ -109,3 +113,14 @@ pcall(function () print(t1.five) end)
 print("Can add nil without a duplicate key error: t1.three = nil")
 pcall(function () t1.three = nil end)
 print(t1)
+
+print()
+print("Implement '+' in the metatable using 'concatinate':")
+print("{1} + {2, 3} is:")
+add_metatable = {
+    __tostring = table_to_string,
+    __add = concatinate
+}
+setmetatable(a1, add_metatable)
+setmetatable(a2, add_metatable)
+print(tostring(a1 + a2))
