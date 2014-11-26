@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 
 local function sort_by_time(array)
-    table.sort( array, function(e1, e2) return e1.time < e2.time end)
+    table.sort(array, function(e1, e2) return e1.time < e2.time end)
 end
 
 local pending = {}

@@ -47,24 +47,23 @@ print()
 print("OO Queue:")
 
 function table_to_string (t) 
-    local mt = getmetatable(t)
-    if not (mt == nil) then
-        if not (mt.privateTable == null) then
-            t = mt.privateTable
-        end
+    if t == nil then
+        return "nil"
     end
     local result = {}
-    if #t == 0 then
-        result = {"Empty"}
-    else
-        for k, v in pairs(t) do
-            result[#result + 1] = k .. ": " .. v
-        end
+    local count = 0
+    for k, v in pairs(t) do
+        count = count + 1
+        result[#result + 1] = k .. ": " .. tostring(v)
     end
+    if count == 0 then
+        result = {"Empty"}
+    end    
     return table.concat(result, "\n")
 end
 
 Queue = {
+    name = "Queue",
     __tostring = table_to_string
 }
 function Queue:new(array)
@@ -93,7 +92,7 @@ function Queue:remove()
 end
 q = Queue:new({1, 2})
 print(q)
-print("Add 4 to the queue:")
+print("Add 3 to the queue:")
 q:add(3)
 print(q)
 print("Call remove: ")
